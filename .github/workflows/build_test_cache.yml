@@ -12,7 +12,6 @@ on:
 
 jobs:
   build_and_test:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -33,4 +32,4 @@ jobs:
         restore-keys: ${{ runner.os }}-m2      
 
     - name: Build and test project with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn --batch-modeB package --file pom.xml

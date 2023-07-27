@@ -9,11 +9,11 @@ public enum Role {
     public String toString() {
         switch (this.ordinal()) {
             case 0:
-                return "Guest";
+                return "guest";
             case 1:
-                return "Host";
+                return "host";
             default:
-                return "No role";
+                return "no role";
         }
     }
 }

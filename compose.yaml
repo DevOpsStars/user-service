@@ -23,13 +23,3 @@ services:
       - POSTGRES_USER=myuser
     ports:
       - "5432:5432"
-
-  pgadmin:
-    container_name: pgadmin4_container
-    image: dpage/pgadmin4:latest
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
-    restart: always
-    ports:
-      - "5454:80"

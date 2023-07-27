@@ -3,7 +3,6 @@ package com.devops.userservice.services;
 import com.devops.userservice.dto.UserDTO;
 import com.devops.userservice.model.User;
 import com.devops.userservice.repository.UserRepository;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;

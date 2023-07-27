@@ -29,8 +29,10 @@ public class UserDTO {
         switch(user.getRole()) {
             case HOST:
                 this.role = "host";
+                break;
             case GUEST:
                 this.role = "guest";
+                break;
             default:
                 this.role = "none";
         }

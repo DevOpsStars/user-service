@@ -48,8 +48,10 @@ public class User {
         switch (dto.getRole()){
             case "host":
                 this.role = Role.HOST;
+                break;
             case "guest":
                 this.role = Role.GUEST;
+                break;
             default:
                 this.role = Role.NO_ROLE;
         }

@@ -5,7 +5,7 @@ spring:
     username: {POSTGRES_USER}
     password: {POSTGRES_PASSWORD}
     hikari:
-      initialization-fail-timeout: 0
+      initialization-fail-timeout: -1
 jpa:
   database-platform: org.hibernate.dialect.PostgresPlusDialect
   generate-ddl: true

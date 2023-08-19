@@ -4,8 +4,11 @@ spring:
     url: jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}
     username: {POSTGRES_USER}
     password: {POSTGRES_PASSWORD}
-    hikari:
-      initialization-fail-timeout: -1
+    minimumIdle: 2
+      maximumPoolSize: 10
+      idleTimeout: 120000
+      connectionTimeout: 300000
+      leakDetectionThreshold: 300000
 jpa:
   database-platform: org.hibernate.dialect.PostgresPlusDialect
   generate-ddl: true

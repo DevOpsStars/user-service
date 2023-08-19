@@ -8,7 +8,7 @@ spec:
     image: gcr.io/kaniko-project/executor:latest
     args:
     - "--dockerfile=Dockerfile"
-    - "--context=git://github.com/DevOpsStars/user-service.git#refs/heads/develop" #git://github.com/kunchalavikram1427/connected-app.git#refs/heads/master
+    - "--context=git://github.com/DevOpsStars/user-service.git#refs/heads/feature_kubernetes_setup" #git://github.com/kunchalavikram1427/connected-app.git#refs/heads/master
     - "--destination=mladenv7/user-service:latest"
     volumeMounts:
     - name: kaniko-secret

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+name: postgresql
+labels:
+    app: postgresql
+    tier: database
+spec:
+ports:
+    - port: {{ .Values.postgresPort }}
+    targetPort: {{ .Values.postgresPort }}
+selector:
+    app: postgresql
+    tier: database

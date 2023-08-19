@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:latest
+    args:
+    - "--dockerfile=Dockerfile"
+    - "--context=git://github.com/DevOpsStars/user-service.git#refs/heads/develop" #git://github.com/kunchalavikram1427/connected-app.git#refs/heads/master
+    - "--destination=mladenv7/user-service:latest"
+    volumeMounts:
+    - name: kaniko-secret
+      mountPath: /kaniko/.docker
+  restartPolicy: Never
+  volumes:
+  - name: kaniko-secret
+    secret:
+      secretName: regcred
+      items:
+        - key: .dockerconfigjson
+          path: config.json

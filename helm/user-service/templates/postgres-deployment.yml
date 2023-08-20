@@ -51,6 +51,7 @@ spec:
     type: Recreate
   template:
     metadata:
+      namespace: {{ .Values.namespace }}
       labels: # Must match 'Service' and 'Deployment' selectors
         app: postgres
         tier: database

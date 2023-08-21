@@ -1,5 +1,5 @@
 appName: user-service
-namespace: user
+namespace: default
 nodePort: 31001
 port: 8000
 

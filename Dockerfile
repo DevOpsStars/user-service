@@ -12,6 +12,8 @@ RUN dos2unix mvnw
 RUN ./mvnw install -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
+EXPOSE 8000
+
 FROM eclipse-temurin:17-jdk-alpine
 VOLUME /tmp
 ARG DEPENDENCY=/workspace/app/target/dependency

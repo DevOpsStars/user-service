@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      containers:
+      - name: {{ .Values.appName }}
+        image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+        imagePullPolicy: Always
+        ports:
+          - containerPort: {{ .Values.port }}
+        env:   # Setting Enviornmental Variables
+          - name: DB_HOST   # Setting Database host address from configMap
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-conf  # name of configMap
+                key: host
+          - name: DB_NAME  # Setting Database name from configMap
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-conf
+                key: name
+          - name: POSTGRES_USER  # Setting Database username from Secret
+            valueFrom:
+              secretKeyRef:
+                name: postgres-credentials # Secret Name
+                key: postgres_user
+          - name: POSTGRES_PASSWORD # Setting Database password from Secret
+            valueFrom:
+              secretKeyRef:
+                name: postgres-credentials
+                key: postgres_password
+---

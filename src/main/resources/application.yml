@@ -5,11 +5,11 @@ spring:
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
     hikari:
-      minimumIdle: 2
-      maximumPoolSize: 10
-      idleTimeout: 120000
-      connectionTimeout: 300000
-      leakDetectionThreshold: 300000
+      minimum-idle: 2
+      maximum-pool-size: 10
+      idle-timeout: 120000
+      connection-timeout: 300000
+      leak-detection-threshold: 300000
       # initialization-fail-timeout: 0
   jpa:
     database-platform: org.hibernate.dialect.PostgresPlusDialect

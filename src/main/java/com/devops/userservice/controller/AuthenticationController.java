@@ -39,9 +39,9 @@ public class AuthenticationController {
 
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
-    
+
     @PostMapping("/login")
     public LoginDTO loginUser(@RequestBody RegistrationDTO body){
         return authenticationService.loginUser(body.getUsername(), body.getPassword());
     }
-}   
+}

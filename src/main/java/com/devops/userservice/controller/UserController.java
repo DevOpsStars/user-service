@@ -1,11 +1,6 @@
 package com.devops.userservice.controller;
 
-import com.devops.userservice.dto.UserDTO;
 import com.devops.userservice.services.UserService;
-import jakarta.validation.Constraint;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

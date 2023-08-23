@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-public class RegistrationDTO {
+public class LoginRequestDTO {
     @NotEmpty(message = "username is required")
     private String username;
     @NotEmpty(message = "password is required")

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.devops.userservice.dto.RegistrationDTO;
+import com.devops.userservice.dto.LoginRequestDTO;
 import com.devops.userservice.services.AuthenticationService;
 
 @Controller
@@ -41,7 +41,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public LoginDTO loginUser(@RequestBody RegistrationDTO body){
+    public LoginDTO loginUser(@RequestBody LoginRequestDTO body){
         return authenticationService.loginUser(body.getUsername(), body.getPassword());
     }
 }

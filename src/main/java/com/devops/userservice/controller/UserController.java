@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @Validated
 @RequestMapping("/api/users")
+@CrossOrigin("*")
 public class UserController {
 
     private UserService userService;
@@ -23,16 +24,6 @@ public class UserController {
     @Autowired
     public UserController(UserService userService){
         this.userService = userService;
-    }
-
-    /* this method expects user information inside dto, and it also expects an already hashed password */
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO dto, @RequestParam("password") String passwordHash){
-        if(this.userService.findUser(dto.getUsername()) != null) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
-
-        this.userService.registerUser(dto, passwordHash);
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @GetMapping("")

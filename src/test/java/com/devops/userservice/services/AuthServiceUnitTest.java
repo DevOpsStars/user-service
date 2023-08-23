@@ -11,23 +11,20 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.BDDAssumptions.given;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceUnitTest {
+public class AuthServiceUnitTest {
 
     @Mock
     UserRepository userRepository;
 
     @InjectMocks
-    UserService userService;
+    AuthenticationService authService;
 
 
     @Test
@@ -42,7 +39,7 @@ public class UserServiceUnitTest {
 
         when(userRepository.save(Mockito.any(User.class))).thenAnswer(i -> i.getArguments()[0]);
 
-        User user = this.userService.registerUser(dto, "passwordHash");
+        User user = this.authService.registerUser(dto, "passwordHash");
 
         //then
         assertThat(user.getPassword(), is("passwordHash"));
@@ -59,6 +56,6 @@ public class UserServiceUnitTest {
         dto.setSurname("Doe");
         dto.setEmail("johndoe@email.com");
 
-        assertThrows(NullPointerException.class, () -> {this.userService.registerUser(dto, "passwordHash");});
+        assertThrows(NullPointerException.class, () -> {this.authService.registerUser(dto, "passwordHash");});
     }
 }

@@ -25,16 +25,6 @@ public class UserDTO {
         this.address = user.getAddress();
         this.email = user.getEmail();
         this.name = user.getName();
-
-        switch(user.getRole()) {
-            case HOST:
-                this.role = "host";
-                break;
-            case GUEST:
-                this.role = "guest";
-                break;
-            default:
-                this.role = "none";
-        }
+        this.role = user.getRole().getAuthority();
     }
 }

@@ -1,0 +1,22 @@
+name: Kaniko CI/CD - build image with kaniko and push to Docker Hub
+on: 
+  push:
+    branches:
+      - main
+      - develop
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      
+      - name: Kaniko build
+        uses: aevea/action-kaniko@master
+        with:
+          image: mladenv7/user-service
+          tag: latest
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          cache: true
+          cache_registry: aevea/cache

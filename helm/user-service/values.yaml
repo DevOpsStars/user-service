@@ -1,0 +1,11 @@
+appName: user-service
+namespace: user
+nodePort: 31001
+port: 8000
+
+image:
+  name: mladenv7/user-service
+  tag: latest
+
+postgresPort: 5432
+dbName: user_db

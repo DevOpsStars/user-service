@@ -33,6 +33,7 @@ public class AuthenticationController {
     /* this method expects user information inside dto, and it also expects an already hashed password */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO dto, @RequestParam("password") String passwordHash){
+        if(passwordHash.equals("")) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         if(this.userService.findUser(dto.getUsername()) != null) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 
         this.authenticationService.registerUser(dto, passwordHash);

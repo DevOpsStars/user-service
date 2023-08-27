@@ -1,6 +1,9 @@
 package com.devops.userservice.controller;
 
+import com.devops.userservice.dto.UpdateDTO;
+import com.devops.userservice.model.User;
 import com.devops.userservice.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +27,17 @@ public class UserController {
     @GetMapping("")
     public ResponseEntity<?> getAllUsers(){
         return new ResponseEntity<>(this.userService.findAllUsers(), HttpStatus.OK);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<?>  updateUser(@Valid @RequestBody UpdateDTO dto, @RequestParam("password") String passwordHash){
+        if(passwordHash.equals("")) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+        User existingUser = this.userService.findUser(dto.getOldUsername());
+        if(existingUser == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        this.userService.updateUser(dto, passwordHash, existingUser);
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

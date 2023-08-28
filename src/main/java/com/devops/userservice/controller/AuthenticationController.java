@@ -2,6 +2,7 @@ package com.devops.userservice.controller;
 
 import com.devops.userservice.dto.LoginDTO;
 import com.devops.userservice.dto.UserDTO;
+import com.devops.userservice.model.User;
 import com.devops.userservice.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,8 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO dto, @RequestParam("password") String passwordHash){
         if(passwordHash.equals("")) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        if(this.userService.findUser(dto.getUsername()) != null) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        User existingUser = this.userService.findUser(dto.getUsername());
+        if(existingUser != null && !existingUser.isDeleted()) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 
         this.authenticationService.registerUser(dto, passwordHash);
 

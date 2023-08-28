@@ -1,11 +1,10 @@
 package com.devops.userservice.controller;
 
+import com.devops.userservice.dto.UpdateDTO;
 import com.devops.userservice.dto.UserDTO;
+import com.devops.userservice.model.User;
 import com.devops.userservice.services.UserService;
-import jakarta.validation.Constraint;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @Validated
 @RequestMapping("/api/users")
+@CrossOrigin("*")
 public class UserController {
 
     private UserService userService;
@@ -25,18 +25,30 @@ public class UserController {
         this.userService = userService;
     }
 
-    /* this method expects user information inside dto, and it also expects an already hashed password */
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO dto, @RequestParam("password") String passwordHash){
-        if(this.userService.findUser(dto.getUsername()) != null) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+    @GetMapping("")
+    public ResponseEntity<?> getAllUsers(){
+        return new ResponseEntity<>(this.userService.findAllUsers(), HttpStatus.OK);
+    }
 
-        this.userService.registerUser(dto, passwordHash);
+    @PostMapping("/update")
+    public ResponseEntity<?>  updateUser(@Valid @RequestBody UpdateDTO dto, @RequestParam("password") String passwordHash){
+        if(passwordHash.equals("")) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+        User existingUser = this.userService.findUser(dto.getOldUsername());
+        if(existingUser == null || existingUser.isDeleted()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        this.userService.updateUser(dto, passwordHash, existingUser);
 
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> getAllUsers(){
-        return new ResponseEntity<>(this.userService.findAllUsers(), HttpStatus.OK);
+    @DeleteMapping("/delete")
+    public ResponseEntity<?>  deleteUser(@RequestParam("username") String username){
+        User existingUser = this.userService.findUser(username);
+        if(existingUser == null || existingUser.isDeleted()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        this.userService.deleteUser(username);
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

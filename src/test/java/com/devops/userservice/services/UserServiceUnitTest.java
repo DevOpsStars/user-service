@@ -1,7 +1,8 @@
 package com.devops.userservice.services;
 
-
+import com.devops.userservice.dto.UpdateDTO;
 import com.devops.userservice.dto.UserDTO;
+import com.devops.userservice.model.Role;
 import com.devops.userservice.model.User;
 import com.devops.userservice.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -13,52 +14,44 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.BDDAssumptions.given;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceUnitTest {
 
     @Mock
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @InjectMocks
     UserService userService;
-
-
     @Test
-    void givenValidNewUserData_whenDataSentForRegistration_thenUserHasPassedData(){
-        //given
-        UserDTO dto = new UserDTO();
-        dto.setRole("host");
-        dto.setUsername("newhost1");
-        dto.setName("John");
-        dto.setSurname("Doe");
-        dto.setEmail("johndoe@email.com");
+    void givenValidNewUserData_whenDataSentForUpdate_thenUserGetsUpdated(){
+
+        User user = new User();
+        user.setUsername("username1");
+        user.setPassword("password");
+        user.setAddress("adress1");
+        user.setName("name");
+        user.setSurname("surname");
+        user.setRole(new Role("ROLE_GUEST"));
 
         when(userRepository.save(Mockito.any(User.class))).thenAnswer(i -> i.getArguments()[0]);
 
-        User user = this.userService.registerUser(dto, "passwordHash");
-
-        //then
-        assertThat(user.getPassword(), is("passwordHash"));
-        assertThat(user.getUsername(), is(dto.getUsername()));
-        assertThat(user.getRole().toString(), is(dto.getRole()));
-    }
-
-    @Test
-    void givenNewUserMissingRole_whenDataSentForRegistration_thenNullPointerExceptionThrown(){
-        //given
         UserDTO dto = new UserDTO();
-        dto.setUsername("newhost1");
+        dto.setRole("ROLE_GUEST");
+        dto.setUsername("newusername1");
         dto.setName("John");
         dto.setSurname("Doe");
         dto.setEmail("johndoe@email.com");
 
-        assertThrows(NullPointerException.class, () -> {this.userService.registerUser(dto, "passwordHash");});
+        UpdateDTO updateDTO = new UpdateDTO(dto, "username1");
+
+        this.userService.updateUser(updateDTO, "newpassword", user);
+
+        assertThat(user.getUsername(), is(dto.getUsername()));
+        assertThat(user.getName(), is(dto.getName()));
     }
 }

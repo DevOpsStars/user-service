@@ -3,15 +3,13 @@ package com.devops.userservice.dto;
 import com.devops.userservice.model.User;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class UserDTO {
     @NotEmpty(message = "username is required")
     private String username;
@@ -25,16 +23,6 @@ public class UserDTO {
         this.address = user.getAddress();
         this.email = user.getEmail();
         this.name = user.getName();
-
-        switch(user.getRole()) {
-            case HOST:
-                this.role = "host";
-                break;
-            case GUEST:
-                this.role = "guest";
-                break;
-            default:
-                this.role = "none";
-        }
+        this.role = user.getRole().getAuthority();
     }
 }

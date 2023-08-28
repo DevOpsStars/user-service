@@ -3,6 +3,7 @@ package com.devops.userservice.services;
 
 import com.devops.userservice.dto.LoginDTO;
 import com.devops.userservice.dto.LoginRequestDTO;
+import com.devops.userservice.dto.UpdateDTO;
 import com.devops.userservice.dto.UserDTO;
 import com.devops.userservice.model.Role;
 import com.devops.userservice.model.User;

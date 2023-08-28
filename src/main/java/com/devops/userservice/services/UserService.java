@@ -47,4 +47,12 @@ public class UserService implements UserDetailsService {
 
         this.userRepository.save(existingUser);
     }
+
+    public void deleteUser(String username){
+        User user = this.findUser(username);
+
+        user.setDeleted(true);
+
+        this.userRepository.save(user);
+    }
 }

@@ -1,6 +1,7 @@
 package com.devops.userservice.controller;
 
 import com.devops.userservice.dto.UpdateDTO;
+import com.devops.userservice.dto.UserDTO;
 import com.devops.userservice.model.User;
 import com.devops.userservice.services.UserService;
 import jakarta.validation.Valid;
@@ -37,6 +38,16 @@ public class UserController {
         if(existingUser == null || existingUser.isDeleted()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
         this.userService.updateUser(dto, passwordHash, existingUser);
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?>  deleteUser(@RequestParam("username") String username){
+        User existingUser = this.userService.findUser(username);
+        if(existingUser == null || existingUser.isDeleted()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        this.userService.deleteUser(username);
 
         return new ResponseEntity<>(null, HttpStatus.OK);
     }

@@ -36,7 +36,7 @@ public class AuthenticationController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO dto, @RequestParam("password") String passwordHash){
         if(passwordHash.equals("")) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         User existingUser = this.userService.findUser(dto.getUsername());
-        if(existingUser != null && !existingUser.isDeleted()) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        if(existingUser != null) return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 
         this.authenticationService.registerUser(dto, passwordHash);
 

@@ -1,8 +1,11 @@
 package com.devops.userservice.services;
 
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.devops.userservice.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +25,6 @@ public class TokenService {
     private JwtDecoder jwtDecoder;
 
     public String generateJwt(Authentication auth){
-
         Instant now = Instant.now();
 
         String scope = auth.getAuthorities().stream()
@@ -34,9 +36,9 @@ public class TokenService {
             .issuedAt(now)
             .subject(auth.getName())
             .claim("roles", scope)
+            .claim("id", ((User) auth.getPrincipal()).getId())
             .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
-
 }

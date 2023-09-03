@@ -35,6 +35,7 @@ public class UserController {
         if(passwordHash.equals("")) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
         User existingUser = this.userService.findUser(dto.getOldUsername());
+        if(passwordHash.equals("")) passwordHash = existingUser.getPassword();
         if(existingUser == null || existingUser.isDeleted()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
         this.userService.updateUser(dto, passwordHash, existingUser);

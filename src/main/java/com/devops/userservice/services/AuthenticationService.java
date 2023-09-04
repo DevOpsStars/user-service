@@ -50,7 +50,10 @@ public class AuthenticationService {
 
             String token = tokenService.generateJwt(auth);
 
-            return new LoginDTO(new UserDTO(userRepository.findByUsername(username).get()), token);
+            User user = userRepository.findByUsername(username).get();
+            if(user.isDeleted()) return new LoginDTO(null, "");
+
+            return new LoginDTO(new UserDTO(user), token);
 
         } catch(AuthenticationException e){
             return new LoginDTO(null, "");

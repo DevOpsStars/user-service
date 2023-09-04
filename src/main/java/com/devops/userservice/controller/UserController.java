@@ -32,8 +32,6 @@ public class UserController {
 
     @PostMapping("/update")
     public ResponseEntity<?>  updateUser(@Valid @RequestBody UpdateDTO dto, @RequestParam("password") String passwordHash){
-        if(passwordHash.equals("")) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-
         User existingUser = this.userService.findUser(dto.getOldUsername());
         if(passwordHash.equals("")) passwordHash = existingUser.getPassword();
         if(existingUser == null || existingUser.isDeleted()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

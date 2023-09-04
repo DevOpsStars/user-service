@@ -27,6 +27,9 @@ public class UserService implements UserDetailsService {
     public User findUser(String username){
         return this.userRepository.findByUsername(username).orElse(null);
     }
+    public User findUser(Long id){
+        return this.userRepository.findById(id).orElse(null);
+    }
 
     public List<User> findAllUsers(){
         return this.userRepository.findAll();

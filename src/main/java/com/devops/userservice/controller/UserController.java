@@ -50,4 +50,20 @@ public class UserController {
 
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
+
+    @GetMapping("/with-id/{id}")
+    public ResponseEntity<?>  getUserById(@PathVariable("id") Long id){
+        User existingUser = this.userService.findUser(id);
+        if(existingUser == null || existingUser.isDeleted()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(existingUser, HttpStatus.OK);
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<?>  getUser(@PathVariable("username") String username){
+        User existingUser = this.userService.findUser(username);
+        if(existingUser == null || existingUser.isDeleted()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(new UserDTO(existingUser), HttpStatus.OK);
+    }
 }

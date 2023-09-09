@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,13 +40,10 @@ public class AuthenticationController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> authenticateUser(HttpServletRequest request){
-        System.out.println(request);
-        System.out.println(request.getHeaderNames());
-        System.out.println(request.getRequestURI());
+    public ResponseEntity<?> authenticateUser(Authentication authentication){
+        if(authentication != null) return new ResponseEntity<>(null, HttpStatus.OK);
 
-
-        return new ResponseEntity<>(request, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     /* this method expects user information inside dto, and it also expects an already hashed password */

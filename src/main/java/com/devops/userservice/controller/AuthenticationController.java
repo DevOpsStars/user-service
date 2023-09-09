@@ -40,7 +40,13 @@ public class AuthenticationController {
 
     @GetMapping("")
     public ResponseEntity<?> authenticateUser(HttpServletRequest request){
-        return new ResponseEntity<>(request, HttpStatus.OK);
+        System.out.println(request);
+        System.out.println(request.getHeaderNames());
+        System.out.println(request.getPathInfo());
+        System.out.println(request.getPathTranslated());
+        System.out.println(request.getPathTranslated());
+
+        return new ResponseEntity<>(request, HttpStatus.UNAUTHORIZED);
     }
 
     /* this method expects user information inside dto, and it also expects an already hashed password */
@@ -52,7 +58,7 @@ public class AuthenticationController {
 
         this.authenticationService.registerUser(dto, passwordHash);
 
-        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @PostMapping("/login")

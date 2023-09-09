@@ -42,9 +42,8 @@ public class AuthenticationController {
     public ResponseEntity<?> authenticateUser(HttpServletRequest request){
         System.out.println(request);
         System.out.println(request.getHeaderNames());
-        System.out.println(request.getPathInfo());
-        System.out.println(request.getPathTranslated());
-        System.out.println(request.getPathTranslated());
+        System.out.println(request.getRequestURI());
+
 
         return new ResponseEntity<>(request, HttpStatus.UNAUTHORIZED);
     }

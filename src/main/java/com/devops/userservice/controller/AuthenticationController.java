@@ -17,6 +17,10 @@ import com.devops.userservice.dto.LoginRequestDTO;
 import com.devops.userservice.services.AuthenticationService;
 
 import javax.xml.transform.OutputKeys;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @Validated
@@ -36,13 +40,7 @@ public class AuthenticationController {
 
     @GetMapping("")
     public ResponseEntity<?> authenticateUser(HttpServletRequest request){
-        System.out.println(request);
-        System.out.println(request.getHeaderNames());
-        System.out.println(request.getPathInfo());
-        System.out.println(request.getPathTranslated());
-        System.out.println(request.getPathTranslated());
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(request, HttpStatus.OK);
     }
 
     /* this method expects user information inside dto, and it also expects an already hashed password */

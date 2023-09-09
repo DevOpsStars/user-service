@@ -4,6 +4,7 @@ import com.devops.userservice.dto.LoginDTO;
 import com.devops.userservice.dto.UserDTO;
 import com.devops.userservice.model.User;
 import com.devops.userservice.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.devops.userservice.dto.LoginRequestDTO;
 import com.devops.userservice.services.AuthenticationService;
+
+import javax.xml.transform.OutputKeys;
 
 @Controller
 @Validated
@@ -29,6 +32,17 @@ public class AuthenticationController {
     public AuthenticationController(AuthenticationService authenticationService, UserService userService) {
         this.authenticationService = authenticationService;
         this.userService = userService;
+    }
+
+    @GetMapping("")
+    public ResponseEntity<?> authenticateUser(HttpServletRequest request){
+        System.out.println(request);
+        System.out.println(request.getHeaderNames());
+        System.out.println(request.getPathInfo());
+        System.out.println(request.getPathTranslated());
+        System.out.println(request.getPathTranslated());
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     /* this method expects user information inside dto, and it also expects an already hashed password */

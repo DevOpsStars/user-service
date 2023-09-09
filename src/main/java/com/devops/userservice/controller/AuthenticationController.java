@@ -40,7 +40,10 @@ public class AuthenticationController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> authenticateUser(Authentication authentication){
+    public ResponseEntity<?> authenticateUser(HttpServletRequest request, Authentication authentication){
+
+        System.out.println(request.getHeader("originalURI"));
+
         if(authentication != null) return new ResponseEntity<>(null, HttpStatus.OK);
 
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);

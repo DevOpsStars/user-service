@@ -52,7 +52,7 @@ public class AuthenticationController {
 
         this.authenticationService.registerUser(dto, passwordHash);
 
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     @PostMapping("/login")
